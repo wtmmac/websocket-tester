@@ -13,6 +13,10 @@ import (
 	"time"
 )
 
+var (
+	s bool
+)
+
 // tester
 func websocketTester(URL string, gorutineNumber int) {
 	parsedURL, err := url.Parse(URL)
@@ -44,7 +48,12 @@ func websocketTester(URL string, gorutineNumber int) {
 			log.Fatal(err)
 		}
 		dataBuffer.Write(msg[:n])
-		fmt.Printf("websocketTester %7d received\n", gorutineNumber)
+		if s == true {
+			fmt.Printf("websocketTester %7d received: %s\n", gorutineNumber, dataBuffer.String())
+		} else {
+			fmt.Printf("websocketTester %7d received\n", gorutineNumber)
+		}
+
 		dataBuffer.Reset()
 	}
 }
@@ -61,6 +70,9 @@ func main() {
 	// Interval of starting websocketTester
 	var interval int
 	flag.IntVar(&interval, "i", 10, "Interval of starting websocketTester(Unit:Millisecond)")
+
+	// Switch to Show received msg
+	flag.BoolVar(&s, "s", true, "Switch to Show received msg")
 
 	flag.Parse()
 
