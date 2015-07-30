@@ -32,7 +32,7 @@ func websocketTester(URL string, gorutineNumber int) {
 
 	fmt.Printf(">>>websocketTester started:%7d\n", gorutineNumber)
 
-	message := []byte("hello, world!")
+	message := []byte(fmt.Sprintf("%d:%s", os.Getpid(), "hello, world!"))
 	_, err = ws.Write(message)
 	if err != nil {
 		log.Fatal(err)
